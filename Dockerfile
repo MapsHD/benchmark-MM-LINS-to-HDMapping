@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libboost-all-dev \
     libopencv-dev \
     libtbb-dev \
+    libceres-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
@@ -65,6 +66,8 @@ RUN git clone https://github.com/Livox-SDK/Livox-SDK.git && \
 WORKDIR /ros_ws
 
 COPY ./src ./src
+
+RUN sed -i 's|imu_topic:  "/imu_raw"|imu_topic:  "/imu/data"|' src/MM-LINS/FAST-LIO/config/velodyne.yaml
 
 # Build workspace
 RUN source /opt/ros/noetic/setup.bash && \
