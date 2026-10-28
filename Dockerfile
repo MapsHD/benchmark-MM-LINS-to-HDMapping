@@ -67,6 +67,11 @@ WORKDIR /ros_ws
 
 COPY ./src ./src
 
+# Canonical-bag sensor profile (config + launch), kept out of the upstream MM-LINS
+# submodule: its own ouster64.yaml with only the sensor description changed.
+COPY ./overlay/config/ ./src/MM-LINS/FAST-LIO/config/
+COPY ./overlay/launch/ ./src/MM-LINS/FAST-LIO/launch/
+
 # Build workspace
 RUN source /opt/ros/noetic/setup.bash && \
     catkin_make
